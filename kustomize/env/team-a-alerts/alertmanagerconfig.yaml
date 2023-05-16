@@ -40,11 +40,12 @@ spec:
   receivers:
   - name: default
     emailConfigs:
-      - to: "balazs.szeti.test@gmail.com"
-        from: "balazs.szeti.test@gmail.com"
-        smarthost: "smtp.gmail.com:587"
-        authUsername: "balazs.szeti.test@gmail.com"
+      - authIdentity: r.baum.test@gmail.com
         authPassword:
           name: smtp-auth
           key: password
-        authIdentity: "balazs.szeti.test@gmail.com"
+        authUsername: r.baum.test@gmail.com
+        from: r.baum.test@gmail.com
+        requireTLS: true
+        smarthost: "smtp.gmail.com:587"
+        to: r.baum.test@gmail.com

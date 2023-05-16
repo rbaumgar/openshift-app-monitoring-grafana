@@ -6,7 +6,7 @@ spec:
   upgrades:
     enabled: true
     minor: true
-  version: 7.10.0
+  version: 7.11.0
   adminUser: admin
   adminPassword: admin
   acceptors:
@@ -23,7 +23,7 @@ spec:
     # sslSecret: amq-broker-ssl-console
   deploymentPlan:
     image: placeholder
-    persistenceEnabled: true
+    persistenceEnabled: false
     enableMetricsPlugin: true
     requireLogin: true
     livenessProbe:
@@ -33,8 +33,8 @@ spec:
       requests:
         cpu: 50m
         memory: 512Mi
-      limits:
-        cpu: "1"
-        memory: 2Gi
+      # limits:
+      #   cpu: "1"
+      #  memory: 2Gi
   brokerProperties:
     - globalMaxSize=100m

@@ -5,11 +5,12 @@ oc apply -k kustomize/env/openshift-monitoring
 
 # Create grafana-monitoring namespace and install Grafana operator
 oc apply -k kustomize/env/grafana-monitoring-operator
+echo "wait for crd/grafanas.integratly.org "
 while ! oc wait --for condition=established crd/grafanas.integreatly.org; do sleep 1; done
 
 # Create Grafana instance in grafana-monitoring namespace
 SATOKEN=`oc extract secret/grafana-thanos-token -n grafana-monitoring --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/grafana-monitoring/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/grafana-monitoring/kustomization.yaml
 oc apply -k kustomize/env/grafana-monitoring
 
 ### App namespaces ###
@@ -25,12 +26,14 @@ oc apply -k kustomize/env/team-b-namespace
 oc apply -k kustomize/env/team-a-operators
 
 # The first time you want to wait for CRDs to become ready on the cluster - Only works as cluster-admin
+echo "wait for crd/activemqartemises.broker.amq.io "
 while ! oc wait --for condition=established crd/activemqartemises.broker.amq.io; do sleep 1; done
+echo "wait for crd/ keycloaks.keycloak.org "
 while ! oc wait --for condition=established crd/keycloaks.keycloak.org; do sleep 1; done
 
 # Workload + Grafana namespace scoped
 SATOKEN=`oc extract secret/grafana-thanos-token -n team-a --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-a-workload/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-a-workload/kustomization.yaml
 oc apply -k kustomize/env/team-a-workload
 
 
@@ -40,7 +43,7 @@ oc apply -k kustomize/env/team-a-workload
 oc apply -k kustomize/env/team-b-operators
 
 SATOKEN=`oc extract secret/grafana-thanos-token -n team-b --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-b-workload/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-b-workload/kustomization.yaml
 oc apply -k kustomize/env/team-b-workload
 
 ### Alerts ###

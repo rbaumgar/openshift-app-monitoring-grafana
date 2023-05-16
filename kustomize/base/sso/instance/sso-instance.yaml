@@ -16,17 +16,17 @@ spec:
       requests:
         cpu: 100m
         memory: 750Mi
-      limits:
-        cpu: 1
-        memory: 1Gi
+      # limits:
+      #   cpu: 1
+      #   memory: 1Gi
   postgresDeploymentSpec:
     resources:
       requests:
         cpu: 50m
         memory: 100Mi
-      limits:
-        cpu: 1
-        memory: 500Mi
+      # limits:
+      #   cpu: 1
+      #   memory: 500Mi
 ---
 # Realm
 apiVersion: keycloak.org/v1alpha1

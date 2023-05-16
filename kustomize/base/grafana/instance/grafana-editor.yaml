@@ -66,16 +66,16 @@ spec:
     annotations:
       service.alpha.openshift.io/serving-cert-secret-name: grafana-k8s-tls
   resources:
-    limits:
-      cpu: '1'
-      memory: 256Mi
+    # limits:
+    #   cpu: '1'
+    #   memory: 256Mi
     requests:
       cpu: 100m
       memory: 128Mi
   initResources:
-    limits:
-      cpu: '1'
-      memory: 256Mi
+    # limits:
+    #   cpu: '1'
+    #   memory: 256Mi
     requests:
       cpu: 100m
       memory: 128Mi

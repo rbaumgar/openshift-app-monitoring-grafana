@@ -42,7 +42,7 @@ Deploy a Grafana in `grafana-monitoring` namespace. Create a _ServiceAccount_ (`
 oc apply -k kustomize/env/grafana-monitoring-operator
 
 SATOKEN=`oc extract secret/grafana-thanos-token -n grafana-monitoring --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/grafana-monitoring/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/grafana-monitoring/kustomization.yaml
 oc apply -k kustomize/env/grafana-monitoring
 ```
 
@@ -84,7 +84,7 @@ Deploy Grafana and our applications to monitor (using Red Hat SSO and AMQ Broker
 oc apply -k kustomize/env/team-a-operators
 
 SATOKEN=`oc extract secret/grafana-thanos-token -n team-a --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-a-workload/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-a-workload/kustomization.yaml
 oc apply -k kustomize/env/team-a-workload
 ```
 
@@ -94,7 +94,7 @@ And similarly for `team-b`:
 oc apply -k kustomize/env/team-b-operators
 
 SATOKEN=`oc extract secret/grafana-thanos-token -n team-b --keys=token --to=-`
-sed -i '' "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-b-workload/kustomization.yaml
+sed -i "s/Bearer .*/Bearer $SATOKEN/" kustomize/env/team-b-workload/kustomization.yaml
 oc apply -k kustomize/env/team-b-workload
 ```
 
@@ -257,3 +257,12 @@ Files to check:
 * OAuth proxy for Grafana in link:kustomize/base/grafana/instance/grafana-admin.yaml[]
 * API version in link:kustomize/env/team-a-alerts/alertmanagerconfig.yaml[] and link:kustomize/env/team-b-alerts/alertmanagerconfig.yaml[]
 * OpenShift dashboards in link:kustomize/base/grafana/dashboards-openshift/kustomization.yaml[]
+
+== Updates
+* AMQ 7.10 -> 7.11, remove resource.limits, deploymentPlan.persistenceEnabled=false
+* Grafana remove resource.limits
+* SSO remove resource.limitss
+
+For GMail alert receiver: the email has to enable 2FA and the password needs to be the AppPassword, https://security.google.com/settings/security/apppasswords or https://myaccount.google.com/apppasswords
+
+oc create secret generic smtp-auth --from-literal=myAppPassword --dry-run -o yaml | oc replace -f -
