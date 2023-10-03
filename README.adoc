@@ -261,7 +261,9 @@ Files to check:
 == Updates
 * AMQ 7.10 -> 7.11, remove resource.limits, deploymentPlan.persistenceEnabled=false
 * Grafana remove resource.limits
-* SSO remove resource.limitss
+* SSO remove resource.limits, replicas = 1
+* OpenShift 4.13: podmonitor requieres a labal
+(component=prometheusoperator msg="skipping podmonitor" error="relabel configuration for replace action needs targetLabel value" podmonitor=team-a/kafka-resources-metrics namespace=openshift-user-workload-monitoring prometheus=user-workload)
 
 For GMail alert receiver: the email has to enable 2FA and the password needs to be the AppPassword, https://security.google.com/settings/security/apppasswords or https://myaccount.google.com/apppasswords
 
