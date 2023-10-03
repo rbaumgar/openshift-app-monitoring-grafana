@@ -45,3 +45,18 @@ spec:
   configMapRef:
     name: grafana-dashboards
     key: dashboard-sso.json
+---
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: kafka
+  labels:
+    app: grafana
+    monitoring-key: middleware
+spec:
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: grafana-dashboards
+    key: dashboard-kafka.json    

@@ -265,4 +265,4 @@ Files to check:
 
 For GMail alert receiver: the email has to enable 2FA and the password needs to be the AppPassword, https://security.google.com/settings/security/apppasswords or https://myaccount.google.com/apppasswords
 
-oc create secret generic smtp-auth --from-literal=myAppPassword --dry-run -o yaml | oc replace -f -
+oc create secret generic smtp-auth --from-literal=myAppPassword=<password> --dry-run -o yaml -n team-a| oc replace -f -
